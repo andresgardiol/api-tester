@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import {useEffect, useState} from "react";
 
 export default function Home() {
@@ -43,11 +42,25 @@ function ApiTester(props) {
         celular: 123456789
       })
     };
-    fetch(`${props.apiBaseUrl}/contact`, request)
+    fetch(`${props.apiBaseUrl}/contacto`, request)
         .then(response => response.json())
         .then(data => {
           setContact(data);
         });
   }, []);
+
+  return (
+      <div>
+        {contact &&
+            <div>
+              <h1>Contacto</h1>
+              <p>{contact.id}</p>
+              <p>{contact.nombre}</p>
+              <p>{contact.celular}</p>
+              <p>{contact.direccion}</p>
+            </div>
+        }
+      </div>
+  )
 
 }

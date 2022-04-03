@@ -13,7 +13,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 function handlePost(req: NextApiRequest, res: NextApiResponse) {
-    const contacto =req.body;
+    const contacto: Contacto = req.body;
     contacto.id = Math.floor(Math.random() * (10 - 1)) + 1;
     res.status(200).json(contacto);
 }
