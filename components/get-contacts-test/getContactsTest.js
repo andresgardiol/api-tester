@@ -33,6 +33,7 @@ export function GetContactsTest(props) {
 	};
 
 
+	let url = `${props.apiBaseUrl}/contactos`;
 	useEffect(() => {
 		let request = {
 			method: 'GET',
@@ -41,7 +42,7 @@ export function GetContactsTest(props) {
 				'Authorization': `Bearer ${props.apiKey}`
 			}
 		};
-		fetch(`${props.apiBaseUrl}/contactos`, request)
+		fetch(url, request)
 				.then(response => response.json())
 				.then(data => {
 					setContacts(data);
@@ -52,8 +53,8 @@ export function GetContactsTest(props) {
 	}, []);
 
 	return (
-			<div>
-				<ListItemButton onClick={handleClick}>
+			<div style={{marginTop: "10px"}}>
+				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
 						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
 					</ListItemIcon>
@@ -69,11 +70,11 @@ export function GetContactsTest(props) {
 							<Typography sx={{width: '33%', flexShrink: 0}}>
 								<strong>URL:</strong>
 							</Typography>
-							<Typography sx={{color: 'text.secondary'}}> API base url: {`${props.apiBaseUrl}/contactos`}</Typography>
+							<Typography sx={{color: 'text.secondary'}}> API base url: {url}</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								API base url: {`${props.apiBaseUrl}/contactos`}`}
+								API base url: {url}`}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>

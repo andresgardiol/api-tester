@@ -33,6 +33,7 @@ export function NewContactTest(props) {
 		setOpen(!open);
 	};
 
+	let url = `${props.apiBaseUrl}/contactos`;
 	useEffect(() => {
 		let request = {
 			method: 'POST',
@@ -44,8 +45,13 @@ export function NewContactTest(props) {
 				celular: 123456789
 			})
 		};
-		fetch(`${props.apiBaseUrl}/contacto`, request)
-				.then(response => response.json())
+		fetch(url, request)
+				.then(response => {
+					if (response.status != 200) {
+						setError(true);
+					}
+					return response.json();
+				})
 				.then(data => {
 					setNewContact(data);
 				})
@@ -56,7 +62,7 @@ export function NewContactTest(props) {
 
 	return (
 			<div>
-				<ListItemButton onClick={handleClick}>
+				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
 						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
 					</ListItemIcon>
@@ -72,11 +78,11 @@ export function NewContactTest(props) {
 							<Typography sx={{width: '33%', flexShrink: 0}}>
 								<strong>URL:</strong>
 							</Typography>
-							<Typography sx={{color: 'text.secondary'}}> API base url: {`${props.apiBaseUrl}/contacto`}</Typography>
+							<Typography sx={{color: 'text.secondary'}}> API base url: {url}</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								API base url: {`${props.apiBaseUrl}/contacto`}
+								API base url: {url}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>
@@ -148,7 +154,9 @@ export function NewContactTest(props) {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								<NewContactTestUI newContact={newContact}/>
+								{error ? "Error" :
+										<NewContactTestUI newContact={newContact}/>
+								}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>

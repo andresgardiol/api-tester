@@ -71,8 +71,8 @@ export function GetAContactTest(props) {
 
 
 	return (
-			<div>
-				<ListItemButton onClick={handleClick}>
+			<div style={{marginTop: "10px"}}>
+				<ListItemButton style={{backgroundColor: "#fff"}}  onClick={handleClick}>
 					<ListItemIcon>
 						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
 					</ListItemIcon>

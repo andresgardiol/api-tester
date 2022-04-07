@@ -71,7 +71,7 @@ export default function Home() {
 
 				{apiBaseUrl && apiKey &&
 						<Card style={{marginTop: "20px"}}>
-							<CardContent>
+							<CardContent style={{backgroundColor: "#dcdcdc"}}>
 								<Typography variant="h5" component="div">
 									Pruebas
 								</Typography>
