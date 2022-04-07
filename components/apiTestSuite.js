@@ -1,6 +1,6 @@
 import {NewContactTest} from "./new-contact-test/newContactTest";
-import {GetAContactTest} from "./getAContactTest";
-import {GetContactsTest} from "./getContactsTest";
+import {GetAContactTest} from "./get-contact-test/getAContactTest";
+import {GetContactsTest} from "./get-contacts-test/getContactsTest";
 import {List} from "@mui/material";
 
 

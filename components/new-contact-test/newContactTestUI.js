@@ -1,15 +1,7 @@
-import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography} from "@mui/material";
-import {ExpandMore} from "@mui/icons-material";
+import {Avatar, Card, CardContent, CardHeader, IconButton, Typography} from "@mui/material";
+
 
 function MoreVertIcon() {
-	return null;
-}
-
-function FavoriteIcon() {
-	return null;
-}
-
-function ShareIcon() {
 	return null;
 }
 
@@ -20,7 +12,7 @@ export function NewContactTestUI(props) {
 				<CardHeader
 						avatar={
 							<Avatar sx={{bgcolor: "red"}} aria-label="recipe">
-								J
+								{props.newContact.nombre && props.newContact.nombre[0]}
 							</Avatar>
 						}
 						action={
@@ -32,9 +24,11 @@ export function NewContactTestUI(props) {
 						subheader={`Nro: ${props.newContact.celular}`}
 				/>
 				<CardContent>
-					<Typography variant="body2" color="text.secondary">
-						Direccion: Calle {props.newContact.direccion.calle} - Numero {props.newContact.direccion.numero}
-					</Typography>
+					{props.newContact.direccion &&
+							<Typography variant="body2" color="text.secondary">
+								Direccion: Calle {props.newContact.direccion.calle} - Número {props.newContact.direccion.numero}
+							</Typography>
+					}
 				</CardContent>
 			</Card>
 	);

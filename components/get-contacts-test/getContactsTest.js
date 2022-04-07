@@ -1,27 +1,26 @@
 import {useEffect, useState} from "react";
 import {
-	Accordion,
-	AccordionDetails,
+	Accordion, AccordionDetails,
 	AccordionSummary,
-	Collapse,
+	Collapse, List,
 	ListItemButton,
 	ListItemIcon,
 	ListItemText,
 	Typography
 } from "@mui/material";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import CheckCircleOutlineSharpIcon from "@mui/icons-material/CheckCircleOutlineSharp";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineSharp';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import {NewContactTestUI} from "./newContactTestUI";
+import GetContactsTestUI from "../get-contact-test/getContactsTestUI";
 
 function ExpandMoreIcon() {
 	return null;
 }
 
-export function NewContactTest(props) {
+export function GetContactsTest(props) {
+	const [contacts, setContacts] = useState([]);
 	const [expanded, setExpanded] = useState(false);
 	const [open, setOpen] = useState(true);
-	const [newContact, setNewContact] = useState({});
 	const [error, setError] = useState(false);
 
 	const handleChange =
@@ -33,21 +32,19 @@ export function NewContactTest(props) {
 		setOpen(!open);
 	};
 
+
 	useEffect(() => {
 		let request = {
-			method: 'POST',
+			method: 'GET',
 			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				nombre: 'John Doe',
-				celular: 123456789
-			})
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${props.apiKey}`
+			}
 		};
-		fetch(`${props.apiBaseUrl}/contacto`, request)
+		fetch(`${props.apiBaseUrl}/contactos`, request)
 				.then(response => response.json())
 				.then(data => {
-					setNewContact(data);
+					setContacts(data);
 				})
 				.catch(error => {
 					setError(true);
@@ -60,7 +57,7 @@ export function NewContactTest(props) {
 					<ListItemIcon>
 						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
 					</ListItemIcon>
-					<ListItemText primary="Test case: Crear contacto"/>
+					<ListItemText primary="Test case: Obtener contactos"/>
 					{open ? <ExpandLess/> : <ExpandMore/>}
 				</ListItemButton>
 				<Collapse in={open} timeout="auto" unmountOnExit>
@@ -72,11 +69,11 @@ export function NewContactTest(props) {
 							<Typography sx={{width: '33%', flexShrink: 0}}>
 								<strong>URL:</strong>
 							</Typography>
-							<Typography sx={{color: 'text.secondary'}}> API base url: {`${props.apiBaseUrl}/contacto`}</Typography>
+							<Typography sx={{color: 'text.secondary'}}> API base url: {`${props.apiBaseUrl}/contactos`}</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								API base url: {`${props.apiBaseUrl}/contacto`}
+								API base url: {`${props.apiBaseUrl}/contactos`}`}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>
@@ -98,16 +95,11 @@ export function NewContactTest(props) {
 							<Typography>
 								<strong>Headers:</strong>
 								<pre>{JSON.stringify({
-									method: 'POST',
+									method: 'GET',
 									headers: {
 										'Content-Type': 'application/json',
 										'Authorization': `Bearer ${props.apiKey}`
 									}
-								}, null, 2)}</pre>
-								<strong>Body:</strong>
-								<pre>{JSON.stringify({
-									nombre: 'John Doe',
-									celular: 123456789
 								}, null, 2)}</pre>
 							</Typography>
 						</AccordionDetails>
@@ -129,7 +121,7 @@ export function NewContactTest(props) {
 						<AccordionDetails>
 							<Typography>
 								<strong>Body:</strong>
-								<pre>{JSON.stringify(newContact, null, 2)}</pre>
+								<pre>{JSON.stringify(contacts, null, 2)}</pre>
 							</Typography>
 						</AccordionDetails>
 					</Accordion>
@@ -148,11 +140,18 @@ export function NewContactTest(props) {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								<NewContactTestUI newContact={newContact}/>
+								<List sx={{ width: '100%', maxWidth: 360}}>
+									{contacts.contactos &&
+											contacts.contactos.map(contact => (
+													<GetContactsTestUI key={contact.id} contact={contact}/>
+											))
+									}
+								</List>
 							</Typography>
 						</AccordionDetails>
 					</Accordion>
 				</Collapse>
 			</div>
-	);
+	)
+			;
 }
