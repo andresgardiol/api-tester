@@ -10,3 +10,6 @@ export type Direccion = {
     numero: string;
 };
 
+export type Contactos = {
+    contactos: Contacto[];
+};

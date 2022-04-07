@@ -43,7 +43,8 @@ function handleGet(req: NextApiRequest, res: NextApiResponse) {
             }
         }
     ];
-    res.status(200).json(contactos);
+
+    res.status(200).json({contactos});
 }
 
 function handleNotFound(req: NextApiRequest, res: NextApiResponse) {
