@@ -13,7 +13,15 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({name: 'John Doe'})
 }
 
+function handleUnauthorized(res: ServerResponse & { send: Send<any>; json: Send<any>; status: (statusCode: number) => NextApiResponse<any>; redirect: { (url: string): NextApiResponse<any>; (status: number, url: string): NextApiResponse<any> }; setPreviewData: (data: (object | string), options?: { maxAge?: number }) => NextApiResponse<any>; clearPreviewData: () => NextApiResponse<any>; unstable_revalidate: (urlPath: string) => Promise<void> }) {
+    res.status(401).json({error: "Unauthorized"});
+    return;
+}
+
 function handleGet(req: NextApiRequest, res: NextApiResponse) {
+    if (req.headers.authorization != "Bearer asd") {
+        handleUnauthorized(res);
+    }
     let id = +req.query.id;
     if (!id) handleNotFound(req, res);
     let contacto: Contacto = {

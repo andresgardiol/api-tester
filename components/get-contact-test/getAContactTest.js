@@ -63,7 +63,12 @@ export function GetAContactTest(props) {
 			}
 		};
 		fetch(`${props.apiBaseUrl}/contacto/${newContact.id}`, request)
-				.then(response => response.json())
+				.then(response => {
+					if (response.status != 200) {
+						setError(true);
+					}
+					return response.json();
+				})
 				.then(data => {
 					setContact(data);
 				});
@@ -72,7 +77,7 @@ export function GetAContactTest(props) {
 
 	return (
 			<div style={{marginTop: "10px"}}>
-				<ListItemButton style={{backgroundColor: "#fff"}}  onClick={handleClick}>
+				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
 						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
 					</ListItemIcon>
@@ -146,7 +151,7 @@ export function GetAContactTest(props) {
 						</AccordionDetails>
 					</Accordion>
 
-					<Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+					<Accordion  expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
 						<AccordionSummary
 								expandIcon={<ExpandMoreIcon/>}
 								aria-controls="panel2bh-content"
@@ -160,7 +165,7 @@ export function GetAContactTest(props) {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								<NewContactTestUI newContact={contact}/>
+								{error ? "Error" : <NewContactTestUI newContact={contact}/>}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>

@@ -43,7 +43,12 @@ export function GetContactsTest(props) {
 			}
 		};
 		fetch(url, request)
-				.then(response => response.json())
+				.then(response => {
+					if (response.status != 200) {
+						setError(true);
+					}
+					return response.json();
+				})
 				.then(data => {
 					setContacts(data);
 				})
@@ -141,8 +146,9 @@ export function GetContactsTest(props) {
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								<List sx={{ width: '100%', maxWidth: 360}}>
-									{contacts.contactos &&
+								<List sx={{width: '100%', maxWidth: 360}}>
+									{error && "Error"}
+									{!error && contacts.contactos &&
 											contacts.contactos.map(contact => (
 													<GetContactsTestUI key={contact.id} contact={contact}/>
 											))
