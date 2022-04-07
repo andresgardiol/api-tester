@@ -20,7 +20,7 @@ function handleGet(req: NextApiRequest, res: NextApiResponse) {
             nombre: 'John Doe',
             celular: 123456789,
             direccion: {
-                calle: 'Calle falsa 123',
+                calle: 'Calle falsa',
                 numero: '123',
             }
         },
@@ -29,7 +29,7 @@ function handleGet(req: NextApiRequest, res: NextApiResponse) {
             nombre: 'John Doe',
             celular: 123456789,
             direccion: {
-                calle: 'Calle falsa 123',
+                calle: 'Calle falsa',
                 numero: '123',
             }
         },
@@ -38,7 +38,7 @@ function handleGet(req: NextApiRequest, res: NextApiResponse) {
             nombre: 'John Doe',
             celular: 123456789,
             direccion: {
-                calle: 'Calle falsa 123',
+                calle: 'Calle falsa',
                 numero: '123',
             }
         }
