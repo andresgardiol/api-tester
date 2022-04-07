@@ -16,7 +16,7 @@ function handlePost(req: NextApiRequest, res: NextApiResponse) {
     const contacto: Contacto = req.body;
     contacto.id = Math.floor(Math.random() * (10 - 1)) + 1;
     contacto.direccion = {
-        calle: "Calle falsa 123",
+        calle: "Calle falsa",
         numero: "123"
     };
     res.status(200).json(contacto);
