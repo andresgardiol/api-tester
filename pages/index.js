@@ -12,10 +12,7 @@ import {
 	Toolbar,
 	Typography
 } from "@mui/material";
-
-function MenuIcon() {
-	return null;
-}
+import BugReportIcon from '@mui/icons-material/BugReport';
 
 export default function Home() {
 
@@ -25,6 +22,8 @@ export default function Home() {
 	function handleSubmit() {
 		return event => {
 			event.preventDefault();
+			setApiBaseUrl(null);
+			setApiKey(null);
 			setApiBaseUrl(event.target.apiBaseUrl.value);
 			setApiKey(event.target.apiKey.value);
 		};
@@ -41,7 +40,6 @@ export default function Home() {
 								aria-label="menu"
 								sx={{mr: 2}}
 						>
-							<MenuIcon/>
 						</IconButton>
 						<Typography variant="h6" component="div" sx={{flexGrow: 1}}>
 							Contacts API Tester App
@@ -60,11 +58,11 @@ export default function Home() {
 					</CardContent>
 					<form onSubmit={handleSubmit()}>
 						<CardActions>
-							<TextField name="apiBaseUrl" id="outlined-basic" label="URL base" variant="outlined"/>
+							<TextField name="apiBaseUrl" id="outlined-basic" label="URL base" variant="outlined" />
 							<TextField name="apiKey" id="outlined-basic" label="token JWT" variant="outlined"/>
 						</CardActions>
 						<CardActions>
-							<Button type="submit" size="small">Iniciar</Button>
+							<Button type="submit" size="small" variant="contained" endIcon={<BugReportIcon/>}>Iniciar</Button>
 						</CardActions>
 					</form>
 				</Card>

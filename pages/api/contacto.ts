@@ -10,6 +10,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             handleNotFound(req, res);
             break;
     }
+    return;
 }
 
 function handlePost(req: NextApiRequest, res: NextApiResponse) {

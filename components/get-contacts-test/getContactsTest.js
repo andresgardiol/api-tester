@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {
 	Accordion, AccordionDetails,
-	AccordionSummary,
+	AccordionSummary, CircularProgress,
 	Collapse, List,
 	ListItemButton,
 	ListItemIcon,
@@ -20,8 +20,10 @@ function ExpandMoreIcon() {
 export function GetContactsTest(props) {
 	const [contacts, setContacts] = useState([]);
 	const [expanded, setExpanded] = useState(false);
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(true);
+
 
 	const handleChange =
 			(panel) => (event, isExpanded) => {
@@ -54,14 +56,23 @@ export function GetContactsTest(props) {
 				})
 				.catch(error => {
 					setError(true);
+				})
+				.finally(() => {
+					setLoading(false);
 				});
+		;
 	}, []);
 
 	return (
 			<div style={{marginTop: "10px"}}>
 				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
-						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
+						{loading ?
+								<CircularProgress/> :
+								error ?
+										<ErrorOutlineIcon sx={{color: "red"}}/> :
+										<CheckCircleOutlineSharpIcon color="success"/>
+						}
 					</ListItemIcon>
 					<ListItemText primary="Test case: Obtener contactos"/>
 					{open ? <ExpandLess/> : <ExpandMore/>}

@@ -10,45 +10,44 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
             handleNotFound(req, res);
             break;
     }
-    res.status(200).json({name: 'John Doe'})
+    return;
 }
 
 function handleGet(req: NextApiRequest, res: NextApiResponse) {
     const contactos: Contacto[] = [
         {
             id: 1,
-            nombre: 'John Doe',
-            celular: 123456789,
+            nombre: 'Aquiles Baeza',
+            celular: 1115464558,
             direccion: {
-                calle: 'Calle falsa',
-                numero: '123',
+                calle: 'Reconquisa Norte',
+                numero: '1041',
             }
         },
         {
             id: 2,
-            nombre: 'John Doe',
-            celular: 123456789,
+            nombre: 'Elmo Linete',
+            celular: 2615558697,
             direccion: {
-                calle: 'Calle falsa',
-                numero: '123',
+                calle: 'Maradona Sur',
+                numero: '54',
             }
         },
         {
             id: 3,
-            nombre: 'John Doe',
-            celular: 123456789,
+            nombre: 'Abraham Meloyo',
+            celular: 264206489,
             direccion: {
-                calle: 'Calle falsa',
-                numero: '123',
+                calle: 'Laprida Oeste',
+                numero: '135',
             }
         }
     ];
-
     res.status(200).json({contactos});
 }
 
 function handleNotFound(req: NextApiRequest, res: NextApiResponse) {
     res.status(404).json({
-        message: "Not found"
+        message: "Method Not found"
     });
 }

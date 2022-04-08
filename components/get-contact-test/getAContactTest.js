@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {
 	Accordion, AccordionDetails,
-	AccordionSummary,
+	AccordionSummary, CircularProgress,
 	Collapse,
 	ListItemButton,
 	ListItemIcon,
@@ -19,9 +19,10 @@ function ExpandMoreIcon() {
 
 export function GetAContactTest(props) {
 	const [expanded, setExpanded] = useState(false);
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	const [error, setError] = useState(false);
-	const [newContact, setNewContact] = useState({});
+	const [loading, setLoading] = useState(true);
+
 
 	const handleChange =
 			(panel) => (event, isExpanded) => {
@@ -32,28 +33,8 @@ export function GetAContactTest(props) {
 		setOpen(!open);
 	};
 
-	useEffect(() => {
-		let request = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				nombre: 'John Doe',
-				celular: 123456789
-			})
-		};
-		fetch(`${props.apiBaseUrl}/contacto`, request)
-				.then(response => response.json())
-				.then(data => {
-					setNewContact(data);
-				})
-				.catch(error => {
-					setError(true);
-				});
-	}, []);
-
 	const [contact, setContact] = useState({});
+	let url = `${props.apiBaseUrl}/contacto/1`;
 	useEffect(() => {
 		let request = {
 			method: 'GET',
@@ -62,7 +43,7 @@ export function GetAContactTest(props) {
 				'Authorization': `Bearer ${props.apiKey}`
 			}
 		};
-		fetch(`${props.apiBaseUrl}/contacto/${newContact.id}`, request)
+		fetch(url, request)
 				.then(response => {
 					if (response.status != 200) {
 						setError(true);
@@ -71,15 +52,23 @@ export function GetAContactTest(props) {
 				})
 				.then(data => {
 					setContact(data);
+				})
+				.finally(() => {
+					setLoading(false);
 				});
-	}, [newContact]);
+	}, []);
 
 
 	return (
 			<div style={{marginTop: "10px"}}>
 				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
-						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
+						{loading ?
+									<CircularProgress/> :
+									error ?
+											<ErrorOutlineIcon sx={{color: "red"}}/> :
+											<CheckCircleOutlineSharpIcon color="success"/>
+						}
 					</ListItemIcon>
 					<ListItemText primary="Test case: Obtener 1 contacto"/>
 					{open ? <ExpandLess/> : <ExpandMore/>}
@@ -94,11 +83,11 @@ export function GetAContactTest(props) {
 								<strong>URL:</strong>
 							</Typography>
 							<Typography sx={{color: 'text.secondary'}}> API base
-								url: {`${props.apiBaseUrl}/contacto/${newContact.id}`}</Typography>
+								url: {url}</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
-								API base url: {`${props.apiBaseUrl}/contacto/${newContact.id}`}
+								API base url: {url}
 							</Typography>
 						</AccordionDetails>
 					</Accordion>

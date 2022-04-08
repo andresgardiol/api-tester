@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {
 	Accordion,
 	AccordionDetails,
-	AccordionSummary,
+	AccordionSummary, CircularProgress,
 	Collapse,
 	ListItemButton,
 	ListItemIcon,
@@ -20,9 +20,10 @@ function ExpandMoreIcon() {
 
 export function NewContactTest(props) {
 	const [expanded, setExpanded] = useState(false);
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	const [newContact, setNewContact] = useState({});
 	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleChange =
 			(panel) => (event, isExpanded) => {
@@ -33,7 +34,7 @@ export function NewContactTest(props) {
 		setOpen(!open);
 	};
 
-	let url = `${props.apiBaseUrl}/contactos`;
+	let url = `${props.apiBaseUrl}/contacto`;
 	useEffect(() => {
 		let request = {
 			method: 'POST',
@@ -57,6 +58,9 @@ export function NewContactTest(props) {
 				})
 				.catch(error => {
 					setError(true);
+				})
+				.finally(() => {
+					setLoading(false);
 				});
 	}, []);
 
@@ -64,7 +68,12 @@ export function NewContactTest(props) {
 			<div>
 				<ListItemButton style={{backgroundColor: "#fff"}} onClick={handleClick}>
 					<ListItemIcon>
-						{error ? <ErrorOutlineIcon sx={{color: "red"}}/> : <CheckCircleOutlineSharpIcon color="success"/>}
+						{loading ?
+								<CircularProgress/> :
+								error ?
+										<ErrorOutlineIcon sx={{color: "red"}}/> :
+										<CheckCircleOutlineSharpIcon color="success"/>
+						}
 					</ListItemIcon>
 					<ListItemText primary="Test case: Crear contacto"/>
 					{open ? <ExpandLess/> : <ExpandMore/>}
